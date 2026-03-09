@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you marry me? 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', cursive, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffd9e6 0%, #ffb6c1 40%, #ff9eb5 100%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* floating hearts animation */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.5;
+            color: #ff4d6d;
+            animation: floatHeart 8s linear infinite;
+            user-select: none;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.6);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* main card */
+        .proposal-card {
+            background: rgba(255, 240, 245, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 30px 50px rgba(210, 30, 80, 0.3), 0 0 0 6px #fff9 inset, 0 0 0 10px #ffb3c6 inset;
+            padding: 2.5rem 2rem;
+            width: min(90%, 700px);
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            border: 2px solid #ffe2e9;
+        }
+
+        /* two teddy bears section */
+        .teddy-bears {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy hug */
+        }
+
+        /* hug class for bears container */
+        .teddy-bears.hug {
+            gap: -10px;  /* pull them closer */
+            transform: scale(1.1);
+        }
+
+        .bear {
+            background: #8b5a2b;
+            background: radial-gradient(circle at 30% 30%, #b87333, #6b4226);
+            width: 120px;
+            height: 120px;
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            box-shadow: 0 12px 0 #4d2f1a, 0 15px 20px rgba(0,0,0,0.2);
+            display: inline-block;
+            border: 3px solid #5a3a1e;
+            transition: all 0.6s ease-in-out;
+        }
+
+        /* individual bear hug animation */
+        .teddy-bears.hug .bear:first-child {
+            transform: translateX(18px) rotate(-5deg);
+        }
+        .teddy-bears.hug .bear:last-child {
+            transform: translateX(-18px) rotate(5deg);
+        }
+
+        .bear::before {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 35px;
+            background: #6b4226;
+            border-radius: 50%;
+            top: -12px;
+            left: 15px;
+            box-shadow: 50px 0 #6b4226;
+        }
+
+        .bear::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 30px;
+            background: #4d2f1a;
+            border-radius: 60% 60% 40% 40%;
+            bottom: -15px;
+            left: 25px;
+            box-shadow: 40px 0 #4d2f1a;
+            z-index: -1;
+        }
+
+        .ear-left, .ear-right {
+            position: absolute;
+            width: 38px;
+            height: 45px;
+            background: #8b5a2b;
+            background: radial-gradient(circle at 40% 40%, #c27e4a, #5a3a1e);
+            border-radius: 70% 70% 40% 40%;
+            top: -18px;
+            border: 2px solid #3f2a13;
+            box-shadow: 0 6px 0 #3f2a13;
+        }
+
+        .ear-left {
+            left: 5px;
+            transform: rotate(-15deg);
+        }
+
+        .ear-right {
+            right: 5px;
+            transform: rotate(15deg);
+        }
+
+        .face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .eyes {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 25px;
+        }
+
+        .eye {
+            width: 16px;
+            height: 16px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px white;
+        }
+
+        .nose {
+            position: absolute;
+            width: 22px;
+            height: 16px;
+            background: #4a2a1a;
+            border-radius: 40% 40% 30% 30%;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 3px 0 #1f1309;
+        }
+
+        .mouth {
+            position: absolute;
+            width: 28px;
+            height: 14px;
+            background: transparent;
+            border-bottom: 4px solid #4a2a1a;
+            border-radius: 0 0 30px 30px;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* right bear little variation (girl) */
+        .bear.girl .ear-left {
+            background: #d2697a; 
+            background: radial-gradient(circle at 30% 30%, #ffaebc, #b3445c);
+        }
+        .bear.girl .ear-right {
+            background: #d2697a;
+            background: radial-gradient(circle at 30% 30%, #ffaebc, #b3445c);
+        }
+        .bear.girl .nose {
+            background: #b3445c;
+        }
+        .bear.girl {
+            background: radial-gradient(circle at 30% 30%, #d98880, #a5696b);
+        }
+        .bear.girl .mouth {
+            border-bottom: 4px solid #b3445c;
+        }
+
+        /* blush */
+        .blush {
+            position: absolute;
+            width: 20px;
+            height: 12px;
+            background: #ffa5aa;
+            border-radius: 50%;
+            opacity: 0.8;
+            top: 55px;
+            left: 15px;
+            filter: blur(3px);
+        }
+        .blush.right {
+            left: auto;
+            right: 15px;
+        }
+
+        /* question */
+        .question h1 {
+            font-size: 2.5rem;
+            margin: 30px 0 15px;
+            color: #a12b4a;
+            text-shadow: 4px 4px 0 #ffccd9, 6px 6px 0 rgba(255, 92, 142, 0.3);
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .question p {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #63002a;
+            background: #ffe9f0d6;
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 5px 0 #fdaeb9;
+            margin: 15px 0 30px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin: 20px 0 15px;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 110px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-size: 2.2rem;
+            font-weight: bold;
+            padding: 18px 45px;
+            border-radius: 60px;
+            background: #ffe5f1;
+            box-shadow: 0 8px 0 #b3445c, 0 14px 20px #f598b2;
+            color: #a52d53;
+            transition: all 0.1s ease;
+            letter-spacing: 2px;
+            border: 2px solid white;
+            min-width: 180px;
+        }
+
+        .btn-yes {
+            background: #ffb3c6;
+            color: #8a1e3a;
+            box-shadow: 0 8px 0 #a52d53, 0 14px 25px #ff809a;
+            transform: scale(1);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            font-size: 2.2rem;
+            padding: 18px 50px;
+        }
+
+        .btn-no {
+            background: #4d3e45;
+            color: #ffe5ec;
+            box-shadow: 0 8px 0 #2c1a21, 0 14px 20px #916e78;
+            position: relative;
+            transition: all 0.15s;
+            font-size: 2.2rem;
+            padding: 18px 50px;
+        }
+
+        .btn-no:hover {
+            background: #5f4d55;
+        }
+
+        /* for moving no button */
+        .move-zone {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #b32e54;
+            font-size: 1.4rem;
+            font-weight: 500;
+            text-shadow: 0 2px 5px #ffeef2;
+        }
+
+        /* responsive */
+        @media (max-width: 550px) {
+            .btn {
+                font-size: 1.7rem;
+                padding: 15px 30px;
+                min-width: 140px;
+            }
+            .bear {
+                width: 100px;
+                height: 100px;
+            }
+            .question h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- animated rose hearts background -->
+    <div class="heart-bg" id="heartBg"></div>
+
+    <main class="proposal-card">
+        <!-- two adorable teddy bears (they will hug on 'yes') -->
+        <div class="teddy-bears" id="teddyBears">
+            <div class="bear">
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="face">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                    <div class="nose"></div>
+                    <div class="mouth"></div>
+                    <div class="blush"></div>
+                    <div class="blush right"></div>
+                </div>
+            </div>
+            <div class="bear girl">
+                <div class="ear-left"></div>
+                <div class="ear-right"></div>
+                <div class="face">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                    <div class="nose"></div>
+                    <div class="mouth"></div>
+                    <div class="blush"></div>
+                    <div class="blush right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- proposal text -->
+        <div class="question">
+            <h1>💕 My Love, I have to ask... 💕</h1>
+            <p>Will you marry me? 💍</p>
+        </div>
+
+        <!-- interactive buttons -->
+        <div class="buttons">
+            <!-- YES button: grows bigger over time (second to second) -->
+            <button class="btn btn-yes" id="yesBtn">YES 💖</button>
+
+            <!-- NO button: moves on hover/touch (up/down/left/right) -->
+            <div class="move-zone" id="noMoveZone">
+                <button class="btn btn-no" id="noBtn">NO 😢</button>
+            </div>
+        </div>
+
+        <div class="footer" id="message">
+            (the "Yes" button grows... and "No" likes to run away 😉)
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            // 1) Animated heart background (rose / red hearts)
+            const heartContainer = document.getElementById('heartBg');
+            const heartSymbols = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🩷', '💖', '💗', '💘', '💝', '🌹']; // added rose
+
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                // random heart/rose
+                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                // random size
+                const size = Math.random() * 2 + 1; // 1rem to 3rem
+                heart.style.fontSize = size + 'rem';
+                // random left position
+                heart.style.left = Math.random() * 100 + '%';
+                // random animation duration between 5s and 14s
+                heart.style.animationDuration = (Math.random() * 9 + 5) + 's';
+                // random delay
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                // random opacity
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                heartContainer.appendChild(heart);
+
+                // remove after animation ends to avoid too many elements
+                setTimeout(() => {
+                    heart.remove();
+                }, 15000);
+            }
+
+            // generate hearts every 400ms
+            setInterval(createHeart, 400);
+
+            // 2) Yes button growing slowly (second by second)
+            const yesBtn = document.getElementById('yesBtn');
+            let scale = 1.0; // base scale
+            const scaleStep = 0.007; // grow per second ~ 0.7% each second => after 1 min ~ 1.4x
+
+            const growInterval = setInterval(() => {
+                // slowly increase scale (only if not disabled)
+                if (!yesBtn.disabled) {
+                    scale = scale + scaleStep;
+                    yesBtn.style.transform = `scale(${scale})`;
+                    yesBtn.style.transition = 'transform 0.3s ease';
+                }
+            }, 1000); // every second
+
+            // 3) moving "No" button: random jump on hover/touch
+            const noBtn = document.getElementById('noBtn');
+            const moveZone = document.getElementById('noMoveZone');
+            const container = document.querySelector('.buttons');
+
+            function getRandomOffset() {
+                const maxX = 200;
+                const maxY = 150;
+                let newX = (Math.random() * 2 - 1) * maxX;
+                let newY = (Math.random() * 2 - 1) * maxY;
+                return { x: newX, y: newY };
+            }
+
+            function moveNoButton() {
+                const offset = getRandomOffset();
+                moveZone.style.transform = `translate(${offset.x}px, ${offset.y}px)`;
+                noBtn.style.transition = 'all 0.18s';
+            }
+
+            noBtn.addEventListener('mouseenter', (e) => {
+                if (!noBtn.disabled) moveNoButton();
+            });
+
+            noBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (!noBtn.disabled) moveNoButton();
+            });
+
+            noBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!noBtn.disabled) {
+                    moveNoButton();
+                    document.getElementById('message').innerText = "😜 You can't catch NO! (try again)";
+                }
+            });
+
+            // 4) YES button click -> BEARS HUG, proposal accepted
+            const teddyBears = document.getElementById('teddyBears');
+            const questionText = document.querySelector('.question p');
+            const footerMsg = document.getElementById('message');
+
+            yesBtn.addEventListener('click', () => {
+                // stop growing
+                clearInterval(growInterval);
+                // make bears hug by adding class
+                teddyBears.classList.add('hug');
+
+                // change messages
+                questionText.innerHTML = "💞 YES! A thousand times YES! 💞";
+                footerMsg.innerHTML = "🎉 Look! The bears are hugging! We're getting married! 💍 🎉";
+
+                // enlarge yes button a bit more for effect
+                yesBtn.style.transform = `scale(${scale * 1.2})`;
+                yesBtn.disabled = true;
+                noBtn.disabled = true;
+                noBtn.style.opacity = '0.5';
+                moveZone.style.transform = `translate(0,0)`; // reset no button position
+
+                // extra heart shower
+                for(let i = 0; i < 16; i++) {
+                    setTimeout(() => createHeart(), i*70);
+                }
+            });
+
+        })();
+    </script>
+
+    <!-- additional tiny style for disabled and hug effect -->
+    <style>
+        .btn-yes:disabled {
+            opacity: 0.9;
+            cursor: default;
+            filter: grayscale(0.1);
+            box-shadow: 0 4px 0 #a52d53;
+        }
+        .btn-no:disabled {
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        /* hug styling for bears (additional) */
+        .teddy-bears.hug .bear {
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .teddy-bears.hug .bear .ear-left,
+        .teddy-bears.hug .bear .ear-right {
+            transition: all 0.4s;
+        }
+    </style>
+</body>
+</html>
